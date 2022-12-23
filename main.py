@@ -1,10 +1,10 @@
 import http.client
 import json
 
-def getRepositories():
+def getRepositories(org):
     headers = {"User-Agent": "python-github-api"}
     conn = http.client.HTTPSConnection("api.github.com")
-    conn.request("GET", "/search/repositories?q=org:AlexisReyes&sort=updated&order=desc", '', headers)
+    conn.request("GET", f'/search/repositories?q=org:{org}&sort=updated&order=desc', '', headers)
 
     response = conn.getresponse()
     data     = response.read()
@@ -24,7 +24,7 @@ def filterRepositoriesData(data):
 
 repos = []
 try:
-    data  = getRepositories()
+    data  = getRepositories("AlexisReyes")
     repos = filterRepositoriesData(data)
 except Exception as e:
     raise e
